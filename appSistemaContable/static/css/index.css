@@ -1,0 +1,16 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+body {
+    color: #333;
+    margin: 0px;
+    font-family: "Open Sans";
+    font-size: 35px;
+
+    /*background-color: #ffdd90;*/
+    background-image: url("https://www.mediafire.com/view/0bj0542bbfhiecd/257.jpg/file");
+}
+
+img{
+    height: 50rem;
+    width: 60rem;
+}
