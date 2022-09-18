@@ -15,11 +15,12 @@
 <body>
 este es el body...
 
-<a href='user/login'>LOGIN</a>
-<a href='user/register'>REGISTER</a>
+<a href='/accounts/login/?next=/'>LOGIN</a>
+<!--<a href='user/register'>REGISTER</a>-->
 <a href='/admin'>ADMIN</a>
-
-
-<img src=/static/images/257.jpg>
+<a href='/logout'>LOGOUT</a>
+{{user.email}}
+{{user.superuser}}
+<!--<img src=/static/images/257.jpg>-->
 </body>
 </html>
