@@ -6,7 +6,12 @@ from . import views
 urlpatterns = [
     path('', views.home, name='home'),
     path('accounts/', include('django.contrib.auth.urls')),
-    # path('login', views.login, name='login'),
+    # path('login', views.login_view, name='login'),
     # path('inicio', login, {'template_name': 'login.html'}, name='login'),
-    path('logout', views.logout_view, name='logout')
+    path('logout', views.logout_view, name='logout'),
+    path('agregar-usuario', views.agregar_usuario_view, name='logout'),
+    path('libro-diario', views.libro_diario_view, name='logout'),
+    path('libro-mayor', views.libro_mayor_view, name='logout'),
+    path('plan-de-cuentas', views.plan_de_cuentas_view, name='logout'),
+    path('registrar-asiento', views.registrar_asiento_view, name='logout'),
 ]

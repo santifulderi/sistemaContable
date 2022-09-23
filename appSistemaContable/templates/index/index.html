@@ -9,18 +9,61 @@
 
     <script src="https://kit.fontawesome.com/3160391df1.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" type="text/css" href="static/css/index.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="static/css/index_menu.css" media="screen" />
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
 
 </head>
 <body>
-este es el body...
 
-<a href='/accounts/login/?next=/'>LOGIN</a>
-<!--<a href='user/register'>REGISTER</a>-->
-<a href='/admin'>ADMIN</a>
-<a href='/logout'>LOGOUT</a>
-{{user.email}}
-{{user.superuser}}
-<!--<img src=/static/images/257.jpg>-->
+<!--<a type="button" href="/logout" style="background-color:red; padding: 25px; color: white">CERRAR SESIÓN</a>-->
+<!--{{user.email}}-->
+
+<div id="demo">
+    <nav>
+        <ul>
+            <li>
+                <a href="/plan-de-cuentas">
+                    <i class="fa-regular fa-rectangle-list icon">
+                        <span>Plan de cuentas</span>
+                    </i>
+                </a>
+            </li>
+            <li>
+                <a href="/libro-mayor">
+                    <i class="fa-solid fa-book icon">
+                        <span>Libro mayor</span>
+                    </i>
+                </a>
+            </li>
+            <li>
+                <a href="/libro-diario">
+                    <i class="fa-solid fa-book icon">
+                        <span>Libro diario</span>
+                    </i>
+                </a>
+            </li>
+            <li>
+                <a href="/registrar-asiento">
+                    <i class="fa-solid fa-book-open icon">
+                        <span>Registrar asiento</span>
+                    </i>
+                </a>
+            </li>
+            <li>
+                <a href="/agregar-usuario">
+                    <i class="fa-solid fa-user icon">
+                        <span>Agregar usuario</span>
+                    </i>
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+</div>
+
+
 </body>
+<p id="logout-p" class="logout-p">¿Deseas cerrar sesión? <a id="logout-a" class="logout-a" href='/logout'> Cerrar sesión </a></p>
 </html>
