@@ -1,5 +1,6 @@
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 
@@ -38,7 +39,7 @@ class Usuario(AbstractBaseUser):
     email = models.EmailField('Correo Electrónico', max_length=255, unique=True)
     nombres = models.CharField('Nombres', max_length=200, blank=True, null=True)
     apellidos = models.CharField('Apellidos', max_length=200, blank=True, null=True)
-    # id_perfil = models.ForeignKey('TipoPerfiles', models.DO_NOTHING, db_column='id_perfil')
+    id_perfil = models.ForeignKey('TipoPerfiles', models.DO_NOTHING, db_column='id_perfil')
     imagen = models.ImageField('Imagen de perfil', upload_to='static/images/perfil/', default='/static/images/perfil/default.png',
                                height_field=None, width_field=None, max_length=200)
     usuario_activo = models.BooleanField(default=True)
@@ -61,3 +62,64 @@ class Usuario(AbstractBaseUser):
     @property
     def is_staff(self):
         return self.usuario_administrador
+
+
+class Asiento(models.Model):
+    fecha = models.DateField(default=timezone.now)
+    descripcion = models.CharField(max_length=255, blank=True, null=True)
+    id_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='id_usuario')
+
+    class Meta:
+        # managed = False
+        db_table = 'asiento'
+        verbose_name_plural = 'Asientos'
+        ordering = ['fecha']
+
+
+class CuentaAsiento(models.Model):
+    id_cuenta = models.ForeignKey('Cuentas', models.DO_NOTHING, )
+    id_asiento = models.ForeignKey('Asiento', models.DO_NOTHING, )
+    debe = models.DecimalField(max_digits=9, decimal_places=2, blank=True, null=True)
+    haber = models.DecimalField(max_digits=9, decimal_places=2, blank=True, null=True)
+    saldo = models.DecimalField(max_digits=9, decimal_places=2, blank=True, null=True)
+
+    class Meta:
+        # managed = False
+        db_table = 'cuenta_asiento'
+
+
+class Cuentas(models.Model):
+    cuenta = models.CharField(max_length=50)
+    codigo = models.CharField(unique=True, max_length=20)
+    tipo = models.CharField(max_length=20)
+    recibe_saldo = models.BooleanField()
+    saldo_actual = models.DecimalField(max_digits=9, decimal_places=2, blank=True, null=True)
+
+    class Meta:
+        # managed = False
+        db_table = 'cuentas'
+
+
+class TipoPerfiles(models.Model):
+    perfil = models.CharField(max_length=30)
+
+    class Meta:
+        # managed = False
+        db_table = 'tipo_perfiles'
+
+
+class PerfilesTareas(models.Model):
+    id_tipo_perfil = models.ForeignKey('TipoPerfiles', models.DO_NOTHING, db_column='id_perfil')
+    id_tarea = models.ForeignKey('Tareas', models.DO_NOTHING, db_column='id_tarea')
+
+    class Meta:
+        # managed = False
+        db_table = 'perfiles_tareas'
+
+
+class Tareas(models.Model):
+    tarea = models.CharField(max_length=50)
+
+    class Meta:
+        # managed = False
+        db_table = 'tareas'
