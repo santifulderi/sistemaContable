@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar un nuevo usuario</title>
+    <link rel="stylesheet" type="text/css" href="static/css/styles.css" media="screen" />
+</head>
+<body>
+    {% load crispy_forms_tags %}
+    <div>
+        <br>
+        <br>
+        <br>
+        <div>
+            <div>
+                <div>
+                    <h2>Registro de usuarios</h2>
+                    <hr>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {{ form | crispy }}
+                        <a href="{% url 'home' %}">Ir al inicio</a>
+<!--                        <input type="submit" value="ingresar" class="button">-->
+                        <button class="button">Ingresar nuevo usuario</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

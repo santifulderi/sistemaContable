@@ -20,6 +20,17 @@
 <!--<a type="button" href="/logout" style="background-color:red; padding: 25px; color: white">CERRAR SESIÓN</a>-->
 <!--{{user.email}}-->
 
+{% if user.is_active %}
+<!--{% if username != '' %}-->
+<div>
+    <p style="color: white; font-size: 2rem; font-family: FreeSans; padding: 20px"> <!-- REVISAR LOS STYLES -->
+        <b>Bienvenido: {{ user.nombres }} {{ user.apellidos }}</b>
+    </p>
+</div>
+<!--{% endif %}-->
+{% endif %}
+
+
 <div id="demo">
     <nav>
         <ul>
@@ -51,13 +62,15 @@
                     </i>
                 </a>
             </li>
+            {% if user.usuario_administrador %}
             <li>
                 <a href="/agregar-usuario">
                     <i class="fa-solid fa-user icon">
-                        <span>Agregar usuario</span>
+                        <span>Agregar nuevo usuario</span>
                     </i>
                 </a>
             </li>
+            {% endif %}
 
         </ul>
     </nav>

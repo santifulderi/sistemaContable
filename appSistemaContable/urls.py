@@ -9,9 +9,12 @@ urlpatterns = [
     # path('login', views.login_view, name='login'),
     # path('inicio', login, {'template_name': 'login.html'}, name='login'),
     path('logout', views.logout_view, name='logout'),
-    path('agregar-usuario', views.agregar_usuario_view, name='logout'),
+    path('agregar-usuario', views.registro, name='registro'),
     path('libro-diario', views.libro_diario_view, name='logout'),
     path('libro-mayor', views.libro_mayor_view, name='logout'),
     path('plan-de-cuentas', views.plan_de_cuentas_view, name='logout'),
     path('registrar-asiento', views.registrar_asiento_view, name='logout'),
+
+    path('signup/', views.signup_view, name='signup'),
+    # path('registrousuario', views.registro, name='registro'),
 ]

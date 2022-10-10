@@ -86,6 +86,7 @@ class CuentaAsiento(models.Model):
     class Meta:
         # managed = False
         db_table = 'cuenta_asiento'
+        verbose_name_plural = 'Cuenta asientos'
 
 
 class Cuentas(models.Model):
@@ -98,14 +99,18 @@ class Cuentas(models.Model):
     class Meta:
         # managed = False
         db_table = 'cuentas'
+        verbose_name_plural = 'Cuentas'
 
 
 class TipoPerfiles(models.Model):
     perfil = models.CharField(max_length=30)
 
+    def __str__(self):
+        return f"Tipo de perfil: {self.perfil}"
     class Meta:
         # managed = False
         db_table = 'tipo_perfiles'
+        verbose_name_plural = 'Tipos perfiles'
 
 
 class PerfilesTareas(models.Model):
@@ -115,6 +120,7 @@ class PerfilesTareas(models.Model):
     class Meta:
         # managed = False
         db_table = 'perfiles_tareas'
+        verbose_name_plural = 'Perfiles tareas'
 
 
 class Tareas(models.Model):
@@ -123,3 +129,4 @@ class Tareas(models.Model):
     class Meta:
         # managed = False
         db_table = 'tareas'
+        verbose_name_plural = 'Tareas'

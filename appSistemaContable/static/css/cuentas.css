@@ -1,0 +1,16 @@
+body{
+    text-align: center;
+    margin:0 auto;
+    font-size: 18px;
+    align-items: center;
+    align-content: center;
+}
+
+table{
+
+    padding: 25px;
+}
+.renglon{
+    border: white 1px solid;
+    padding: 30px;
+}

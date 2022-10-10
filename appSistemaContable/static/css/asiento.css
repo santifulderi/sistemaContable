@@ -1,0 +1,116 @@
+
+.container-general{
+    padding: 30px;
+    border: 1px solid white;
+}
+
+.container-header{
+    /*padding: 10px;*/
+    width: 100%;
+    border: 1px solid white;
+    text-align: center;
+}
+
+.container-filtros{
+    /*border: 1px solid white;*/
+}
+
+.formulario-busqueda{
+    padding: 20px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.container-footer-botones{
+    padding: 20px;
+}
+
+input{
+    color: #313145;
+    border-radius: 4px;
+    border-style: none;
+    box-sizing: border-box;
+    background-color: #fff;
+    font-size: 1rem;
+}
+
+.modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #333333bd;
+    display: flex;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 400ms;
+    --transform: translateY(-100vh);
+    --transition: transform .8s;
+}
+
+.modal--show{
+    opacity: 1;
+    pointer-events: unset;
+    transition: opacity 400ms;
+    --transform: translateY(0);
+    --transition: transform .5s .2s;
+    z-index: 10;
+}
+
+.modal-container{
+    margin: auto;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90%;
+    /*background-color: #FFFFFF;*/
+    border-radius: 6px;
+    padding: 3em 2.5em;
+    display: grid;
+    gap: 1em;
+    place-items: center;
+    grid-auto-columns: 100%;
+    transform: var(--transform);
+    transition: var(--transition);
+}
+
+.modal-tittle{
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid white;
+    padding: 20px
+}
+
+.modal-paragraph{
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.modal-img{
+    /*width: 90%;*/
+    /*max-width: 300px;*/
+    font-size: 6rem;
+    text-align: center;
+}
+
+.modal-close{
+    text-decoration: none;
+    color: #FFFFFF;
+    background-color: #20e999;
+    padding: 1em 3em;
+    border: 1px solid;
+    display: inline-block;
+    font-weight: 300;
+    transition: background-color .3s;
+}
+
+.modal-close:hover{
+    color: #20e999;
+    background-color: #FFFFFF;
+}
+
+.input-fecha{
+
+}
+

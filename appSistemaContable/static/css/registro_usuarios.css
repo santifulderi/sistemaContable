@@ -1,0 +1,18 @@
+body{
+    /*text-align: center;*/
+    margin:0 auto;
+    font-size: 18px;
+}
+
+/*h2{*/
+/*    font-size: 3rem;*/
+/*    text-align: center;*/
+/*}*/
+
+.container-formulario{
+    padding: 50px 150px;
+}
+
+.controls{
+    padding: 10px;
+}

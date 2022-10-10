@@ -3,8 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>Plan de cuentas</title>
+    <link rel="stylesheet" type="text/css" href="static/css/styles.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="static/css/cuentas.css" media="screen" />
 </head>
 <body>
-PLAN DE CUENTAS
+<br>
+<br>
+<br>
+<h2>Listado de cuentas</h2>
+<hr>
+
+<table>
+    <tr>
+        <td><strong>Nombre</strong></td>
+        <td><strong>Código</strong></td>
+        <td><strong>Tipo</strong></td>
+        <td><strong>Saldo actual</strong></td>
+    </tr>
+    {% for cuenta in cuentas %}
+        <tr class="renglon">
+            <td>{{cuenta.cuenta}}</td>
+            <td>{{cuenta.codigo}}</td>
+            <td>{{cuenta.tipo}}</td>
+            {% if cuenta.saldo_actual != None %}
+                <td>{{cuenta.saldo_actual}}</td>
+            {% endif %}
+            {% if cuenta.saldo_actual == None %}
+                <td>-</td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tr>
+</table>
 </body>
 </html>
