@@ -8,6 +8,8 @@
     <title>Registrar asiento</title>
     <link rel="stylesheet" type="text/css" href="static/css/asiento.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="static/css/styles.css" media="screen" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="icon" type="image/png" href="{% static '/images/icon-calculator.svg'%}">
 </head>
 
 <script>
@@ -17,25 +19,31 @@
 </script>
 
 <body>
+<br>
+<br>
+<br>
+<h2>Asientos</h2>
+<hr>
 <div class="container-general">
-    <div class="container-header">
-        <h1>Asientos</h1>
+    <div class="container-footer-botones">
+        <!--            <button class="button" type="submit">Imprimir</button>-->
+        <button class="button" type="submit" id="regitrar-asiento-modal-buttom">Registrar nuevo asiento</button>
     </div>
-    <hr style="width: 100%">
+
     <div class="container-body">
-        <div class="container-filtros">
-            <form id="formulario-busqueda" class="formulario-busqueda">
-                <h4>Fecha desde:
-                    <input type="date" id="fecha-desde" class="input-fecha">
-                </h4>
-                <h4>Fecha hasta:
-                    <input type="date" id="fecha-hasta" class="input-fecha">
-                </h4>
-                <button class="button" type="submit">Filtrar</button>
-                <button class="button" type="submit" id="limpiar-filtros">Limpiar filtros</button>
-            </form>
-        </div>
-        <div id="container-tabla-resultados" class="table-asientos">
+<!--        <div class="container-filtros">-->
+<!--            <form id="formulario-busqueda" class="formulario-busqueda">-->
+<!--                <h4>Fecha desde:-->
+<!--                    <input type="date" id="fecha-desde" class="input-fecha">-->
+<!--                </h4>-->
+<!--                <h4>Fecha hasta:-->
+<!--                    <input type="date" id="fecha-hasta" class="input-fecha">-->
+<!--                </h4>-->
+<!--                <button class="button" type="submit">Filtrar</button>-->
+<!--                <button class="button" type="submit" id="limpiar-filtros">Limpiar filtros</button>-->
+<!--            </form>-->
+<!--        </div>-->
+        <div id="container-tabla-resultados" class="table-asientos" style="padding-top: 30px">
             <table>
                 <tr>
                     <td><strong>Fecha</strong></td>
@@ -56,10 +64,7 @@
                 {% endfor %}
             </table>
         </div>
-        <div class="container-footer-botones">
-            <button class="button" type="submit">Imprimir</button>
-            <button class="button" type="submit" id="regitrar-asiento-modal-buttom">Registrar nuevo asiento</button>
-        </div>
+
     </div>
 </div>
 
@@ -71,49 +76,99 @@
             </div>
             <div style="border: 1px solid white; padding: 20px">
                 <div style="padding: 20px">
-                    <h4>Fecha:
-                        <input class="input-fecha" type="date">
-                    </h4>
+<!--                    <h4>Fecha:-->
+<!--                        <input class="input-fecha" type="date">-->
+                        <div id="current_date">
+                            <script>
+                                let today = new Date()
+                                let day = today.getDate()
+                                let month = today.getMonth() + 1
+                                let year = today.getFullYear()
+                                document.getElementById("current_date").innerHTML = 'Fecha: ' +day+'-'+month+'-'+year;
+                            </script>
+                        </div>
+<!--                    </h4>-->
+                    <br>
                     <div>
-                        Nro Asiento <input type="text">
+                        Nro Asiento: {{num_prox_asiento}}
+<!--                        <input type="text">-->
                     </div>
-                    <div>
-                        Descripción<textarea></textarea>
+                    <div style="padding-top: 20px;">
+                        Descripción
+                        <br>
+                        <br>
+                        <textarea maxlength="100" id="descripcion_asiento"></textarea>
                     </div>
                 </div>
             </div>
+
+            <form id="form_renglon">
             <div style="border: 1px solid white; padding: 20px">
-                <div>
-                    Cuenta
+                <div style="padding: 10px 20px">Cuenta
+                    <select name="cuenta" id="renglon_cuenta">
+                        {% for cuenta in cuentas %}
+                            <option value="{{cuenta.id}}">{{cuenta.cuenta}}</option>
+                        {% endfor %}
+                    </select>
+<!--                    {% if user.usuario_administrador %}-->
+<!--                    <a href="/agregar-usuario">-->
+<!--                        <i class="fa-solid fa-user icon">-->
+<!--                            <span>Agregar nueva cuenta</span>-->
+<!--                        </i>-->
+<!--                    </a>-->
+<!--                    {% endif %}-->
                 </div>
-                <div>
-                    Monto <input>
-                    <input type="checkbox">Debe
-                    <input type="checkbox">Haber
+                <div style="padding: 20px">
+<!--                    Monto <input id="renglon_monto" required>-->
+<!--                    Monto <input type="text" class="decimales" id="renglon_monto" required>-->
+                    <script>
+                        function setTwoNumberDecimal(event) {
+                            this.value = parseFloat(this.value).toFixed(2);
+                        }
+                    </script>
+                    Monto <input type="number" id="renglon_monto" required onchange="setTwoNumberDecimal" min="0" step="0.01" value="0.00" />
+                    <script>
+                        $('.decimales').on('change', function () {
+                            this.value = maskDinero(unmaskDinero(this.value));
+                        });
+
+                        function unmaskDinero(numeroString) {
+                            console.log(numeroString.replace(/[^0-9.]+/g,""))
+                            return +(numeroString.replace(/[^0-9.]+/g,""));
+                        }
+                        function maskDinero(numeroInt) {
+                            console.log(parseFloat(numeroInt).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"))
+                            return parseFloat(numeroInt).toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+                        }
+                    </script>
+                    <input type="checkbox" id="renglon_debe">Debe
+                    <input type="checkbox" id="renglon_haber">Haber
                 </div>
-                <button class="button">Agregar</button>
+                <button type="submit" class="button" id="button_agregar">Agregar</button>
             </div>
+            </form>
+
             <div style="border: 1px solid white; padding: 20px">
-                <table>
-                    <tr>
+                <table id="asiento_tabla">
+                    <td style="font-weight: bold">
                         Cuenta
-                    </tr>
-                    <tr>
+                    </td>
+                    <td style="font-weight: bold">
                         Debe
-                    </tr>
-                    <tr>
+                    </td>
+                    <td style="font-weight: bold">
                         Haber
-                    </tr>
-                    <tr>
-
-                    </tr>
-                    <tr>
-
-                    </tr>
+                    </td>
                 </table>
+                <br>
+                <button class="button" id="button-cancelar-asiento">Eliminar último renglón</button>
             </div>
         </div>
-        <button class="button" id="regitrar-asiento-modal-close">Cerrar</button>
+        <div style="display: block">
+            <button class="button" id="regitrar-asiento-modal-close">Cancelar</button>
+            <button class="button" id="button-regitrar-asiento">Registrar asiento</button>
+
+        </div>
     </div>
 </section>
 

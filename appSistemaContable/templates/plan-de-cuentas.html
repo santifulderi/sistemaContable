@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <title>Plan de cuentas</title>
     <link rel="stylesheet" type="text/css" href="static/css/styles.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="static/css/cuentas.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="static/css/asiento.css" media="screen" />
+    <link rel="icon" type="image/png" href="{% static '/images/icon-calculator.svg'%}">
 </head>
 <body>
 <br>
@@ -12,28 +15,88 @@
 <br>
 <h2>Listado de cuentas</h2>
 <hr>
+<br>
 
-<table>
-    <tr>
-        <td><strong>Nombre</strong></td>
-        <td><strong>Código</strong></td>
-        <td><strong>Tipo</strong></td>
-        <td><strong>Saldo actual</strong></td>
-    </tr>
-    {% for cuenta in cuentas %}
+{% if user.usuario_administrador %}
+<button class="button" id="regitrar-cuenta-modal-buttom">
+    Agregar nueva cuenta
+</button>
+
+<section class="modal" id="registrar-cuenta-modal" style="width: 100%">
+    <div class="modal-container">
+        <div style="padding: 30px; width: 100%; height: 100%">
+            <div class="modal-tittle">
+                Agregar nueva cuenta
+            </div>
+            <div>
+                <div>
+                    <label class="required" for="id_cuenta">Nombre de cuenta:</label>
+                    <input type="text" name="cuenta" class="vTextField" maxlength="50" required id="id_cuenta">
+                </div>
+                <div>
+                    <label class="required" for="id_codigo">Codigo:</label>
+                    <input type="text" name="codigo" class="vTextField" maxlength="20" required id="id_codigo">
+                </div>
+                <div>
+                    <label class="required" for="id_tipo">Tipo:</label>
+                    <input type="text" name="tipo" class="vTextField" maxlength="20" required id="id_tipo">
+                </div>
+                <div>
+                    <label>Tipo:</label>
+                    <select name="cuenta" id="renglon_cuenta" required>
+                        <option value="AC">Activo</option>
+                        <option value="PA">Pasivo</option>
+                        <option value="R+">Resultado positivo</option>
+                        <option value="R-">Resultado negativo</option>
+                        <option value="PM">Patrimonio</option>
+                    </select>
+                </div>
+                <div class="checkbox-row">
+                    <label class="vCheckboxLabel" for="id_recibe_saldo">Recibe saldo</label>
+                    <input type="checkbox" name="recibe_saldo" id="id_recibe_saldo">
+                </div>
+                <div>
+                    <label for="id_saldo_actual">Saldo actual:</label>
+                    <input type="number" name="saldo_actual" min="0" step="0.01" id="id_saldo_actual">
+                </div>
+
+            </div>
+        </div>
+        <div style="display: block">
+            <button class="button" id="regitrar-cuenta-modal-close">Cancelar</button>
+            <button class="button" id="button-regitrar-cuenta">Registrar cuenta</button>
+
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<div style="padding: 10px">
+    <table class="tabla">
+        <tr>
+            <th><strong>Nombre</strong></th>
+            <th><strong>Código</strong></th>
+            <th><strong>Tipo</strong></th>
+            <th><strong>Saldo actual</strong></th>
+        </tr>
+        {% for cuenta in cuentas %}
         <tr class="renglon">
             <td>{{cuenta.cuenta}}</td>
             <td>{{cuenta.codigo}}</td>
             <td>{{cuenta.tipo}}</td>
             {% if cuenta.saldo_actual != None %}
-                <td>{{cuenta.saldo_actual}}</td>
+            <td>{{cuenta.saldo_actual}}</td>
             {% endif %}
             {% if cuenta.saldo_actual == None %}
-                <td>-</td>
+            <td>-</td>
             {% endif %}
         </tr>
-    {% endfor %}
-    </tr>
-</table>
+        {% endfor %}
+        </tr>
+    </table>
+</div>
+
+<script src="{% static 'js/cuentas.js' %}"></script>
+
 </body>
 </html>

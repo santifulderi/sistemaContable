@@ -1,0 +1,17 @@
+alter table cuenta_asiento
+add constraint cuenta_asiento_debe
+CHECK(
+	debe >= 0
+)
+
+alter table cuenta_asiento
+add constraint cuenta_asiento_haber
+CHECK(
+	haber >= 0
+)
+
+alter table cuenta_asiento
+add constraint cuenta_asiento_haber_debe
+CHECK(
+	((haber > 0)and(debe = 0)or(haber = 0)and(debe > 0))
+)

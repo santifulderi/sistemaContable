@@ -1,11 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <title>Libro diario</title>
     <link rel="stylesheet" type="text/css" href="static/css/styles.css" media="screen" />
+    <link rel="icon" type="image/png" href="{% static '/images/icon-calculator.svg'%}">
 </head>
 <body>
-LIBRO DIARIO
+<br>
+<br>
+<br>
+<h2>Libro diario</h2>
+<hr>
+
+<table>
+    <tr>
+        <td><strong>Fecha</strong></td>
+        <td><strong>Detalle</strong></td>
+        <td><strong>Cuenta</strong></td>
+        <td><strong>Debe</strong></td>
+        <td><strong>Haber</strong></td>
+    </tr>
+    {% for asiento in asientos %}
+    <tr class="renglon">
+        <td>{{asiento.fecha}}</td>
+        <td>{{asiento.descripcion}}</td>
+        {% for c_a in cuenta_asiento %}
+        {% if c_a.id_asiento == asiento.id %}
+<!--            {% for cuenta in cuentas %}-->
+<!--            {% if c_a.id_cuenta == cuenta.id %}-->
+<!--                <td>{{cuenta.nombre}}</td>-->
+<!--            {% endif %}-->
+<!--            {% endfor %}-->
+            <td>{{c_a.debe}}</td>
+            <td>{{c_a.haber}}</td>
+            <td>{{c_a.haber}}</td>
+        {% endif %}
+        {% endfor %}
+    </tr>
+    {% endfor %}
+    </tr>
+</table>
 </body>
 </html>

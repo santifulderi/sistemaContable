@@ -6,11 +6,115 @@ body{
     align-content: center;
 }
 
-table{
+.table{
+    border-collapse: collapse;
+    width: 100%;
+}
 
-    padding: 25px;
+.table td,.table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.table tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+
+.table tr:hover {
+    background-color: #ddd;
+}
+
+.table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    /*background-color: #04AA6D;*/
+    color: white;
 }
 .renglon{
     border: white 1px solid;
     padding: 30px;
+}
+
+.modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #333333bd;
+    display: flex;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 400ms;
+    --transform: translateY(-100vh);
+    --transition: transform .8s;
+}
+
+.modal--show{
+    opacity: 1;
+    pointer-events: unset;
+    transition: opacity 400ms;
+    --transform: translateY(0);
+    --transition: transform .5s .2s;
+    z-index: 10;
+}
+
+.modal-container{
+    margin: auto;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90%;
+    /*background-color: #FFFFFF;*/
+    border-radius: 6px;
+    padding: 3em 2.5em;
+    display: grid;
+    gap: 1em;
+    place-items: center;
+    grid-auto-columns: 100%;
+    transform: var(--transform);
+    transition: var(--transition);
+    overflow-y: scroll;
+}
+
+.modal-container::-webkit-scrollbar {
+    width: 8px;     /* Tamaño del scroll en vertical */
+    height: 8px;    /* Tamaño del scroll en horizontal */
+    display: none;  /* Ocultar scroll */
+}
+
+.modal-tittle{
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid white;
+    padding: 20px
+}
+
+.modal-paragraph{
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.modal-img{
+    /*width: 90%;*/
+    /*max-width: 300px;*/
+    font-size: 6rem;
+    text-align: center;
+}
+
+.modal-close{
+    text-decoration: none;
+    color: #FFFFFF;
+    background-color: #20e999;
+    padding: 1em 3em;
+    border: 1px solid;
+    display: inline-block;
+    font-weight: 300;
+    transition: background-color .3s;
+}
+
+.modal-close:hover{
+    color: #20e999;
+    background-color: #FFFFFF;
 }

@@ -10,11 +10,15 @@ urlpatterns = [
     # path('inicio', login, {'template_name': 'login.html'}, name='login'),
     path('logout', views.logout_view, name='logout'),
     path('agregar-usuario', views.registro, name='registro'),
-    path('libro-diario', views.libro_diario_view, name='logout'),
-    path('libro-mayor', views.libro_mayor_view, name='logout'),
-    path('plan-de-cuentas', views.plan_de_cuentas_view, name='logout'),
-    path('registrar-asiento', views.registrar_asiento_view, name='logout'),
+    path('libro-diario', views.libro_diario_view, name='libro_diario'),
+    path('libro-mayor', views.libro_mayor_view, name='libro_mayor'),
+    path('plan-de-cuentas', views.plan_de_cuentas_view, name='plan_de_cuentas'),
+    path('agregar-cuenta', views.agregar_cuenta_view, name='agregar_cuenta'),
+    path('registrar-asiento', views.registrar_asiento_view, name='registrar_asiento'),
 
-    path('signup/', views.signup_view, name='signup'),
-    # path('registrousuario', views.registro, name='registro'),
+    path('registrar-nuevo-registro', views.registrar_asiento),
+    path('is-valid-saldo', views.is_valid_saldo),
+    path('get-nombre-cuenta', views.get_nombre_cuenta),
+
+    # path('signup/', views.signup_view, name='signup'),
 ]

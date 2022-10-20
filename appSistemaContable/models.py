@@ -66,7 +66,7 @@ class Usuario(AbstractBaseUser):
 
 class Asiento(models.Model):
     fecha = models.DateField(default=timezone.now)
-    descripcion = models.CharField(max_length=255, blank=True, null=True)
+    descripcion = models.CharField(max_length=255, default="Sin descripción")
     id_usuario = models.ForeignKey('Usuario', models.DO_NOTHING, db_column='id_usuario')
 
     class Meta:
@@ -74,6 +74,9 @@ class Asiento(models.Model):
         db_table = 'asiento'
         verbose_name_plural = 'Asientos'
         ordering = ['fecha']
+
+    def __str__(self):
+        return f"Asiento {self.id}"
 
 
 class CuentaAsiento(models.Model):
@@ -100,6 +103,9 @@ class Cuentas(models.Model):
         # managed = False
         db_table = 'cuentas'
         verbose_name_plural = 'Cuentas'
+
+    def __str__(self):
+        return f"Cuenta {self.cuenta}"
 
 
 class TipoPerfiles(models.Model):
