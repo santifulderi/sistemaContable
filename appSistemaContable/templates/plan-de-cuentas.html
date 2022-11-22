@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Plan de cuentas</title>
     <link rel="stylesheet" type="text/css" href="static/css/styles.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="static/css/cuentas.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="static/css/plan_de_cuentas.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="static/css/asiento.css" media="screen" />
     <link rel="icon" type="image/png" href="{% static '/images/icon-calculator.svg'%}">
 </head>
@@ -18,9 +18,12 @@
 <br>
 
 {% if user.usuario_administrador %}
-<button class="button" id="regitrar-cuenta-modal-buttom">
-    Agregar nueva cuenta
-</button>
+<div class="container-boton">
+    <button class="button" id="regitrar-cuenta-modal-buttom">
+        Agregar nueva cuenta
+    </button>
+</div>
+
 
 <section class="modal" id="registrar-cuenta-modal" style="width: 100%">
     <div class="modal-container">
@@ -28,22 +31,29 @@
             <div class="modal-tittle">
                 Agregar nueva cuenta
             </div>
-            <div>
+            <form id="form_agregar_cuenta" style="text-align: left; border: 1px solid white; padding: 20px;">
+                <br>
                 <div>
-                    <label class="required" for="id_cuenta">Nombre de cuenta:</label>
-                    <input type="text" name="cuenta" class="vTextField" maxlength="50" required id="id_cuenta">
+                    <label class="required" for="cuenta_nombre">Nombre de cuenta:</label>
+                    <input type="text" name="cuenta" class="vTextField" maxlength="50" required id="cuenta_nombre">
                 </div>
+                <br>
                 <div>
-                    <label class="required" for="id_codigo">Codigo:</label>
-                    <input type="text" name="codigo" class="vTextField" maxlength="20" required id="id_codigo">
+                    <label for="cuenta_codigo">Código:</label>
+                    <input type="number" name="codigo" min="0" step="1" id="cuenta_codigo" required>
                 </div>
-                <div>
-                    <label class="required" for="id_tipo">Tipo:</label>
-                    <input type="text" name="tipo" class="vTextField" maxlength="20" required id="id_tipo">
-                </div>
+                <br>
+<!--                <div>-->
+<!--                    <label class="required" for="cuenta_codigo">Codigo:</label>-->
+<!--                    <input type="text" name="codigo" class="vTextField" maxlength="20" required id="cuenta_codigo">-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <label class="required" for="cuenta_tipo">Tipo:</label>-->
+<!--                    <input type="text" name="tipo" class="vTextField" maxlength="20" required id="cuenta_tipo">-->
+<!--                </div>-->
                 <div>
                     <label>Tipo:</label>
-                    <select name="cuenta" id="renglon_cuenta" required>
+                    <select name="cuenta" id="cuenta_tipo" required style="color: #313145; background-color: white; font-size: 1rem; border-radius: 4px">
                         <option value="AC">Activo</option>
                         <option value="PA">Pasivo</option>
                         <option value="R+">Resultado positivo</option>
@@ -51,27 +61,31 @@
                         <option value="PM">Patrimonio</option>
                     </select>
                 </div>
+                <br>
                 <div class="checkbox-row">
-                    <label class="vCheckboxLabel" for="id_recibe_saldo">Recibe saldo</label>
-                    <input type="checkbox" name="recibe_saldo" id="id_recibe_saldo">
+                    <label class="vCheckboxLabel" for="cuenta_recibe_saldo">Recibe saldo</label>
+                    <input type="checkbox" name="recibe_saldo" id="cuenta_recibe_saldo">
                 </div>
+                <br>
                 <div>
-                    <label for="id_saldo_actual">Saldo actual:</label>
-                    <input type="number" name="saldo_actual" min="0" step="0.01" id="id_saldo_actual">
+                    <label for="cuenta_saldo_actual">Saldo actual:</label>
+                    <input type="number" name="saldo_actual" min="0" step="0.01" id="cuenta_saldo_actual">
                 </div>
+                <br>
 
-            </div>
-        </div>
-        <div style="display: block">
-            <button class="button" id="regitrar-cuenta-modal-close">Cancelar</button>
-            <button class="button" id="button-regitrar-cuenta">Registrar cuenta</button>
+                <div style="display: block">
+                    <button class="button" type="submit" id="regitrar-cuenta-modal-close">Cancelar</button>
+                    <button class="button" id="button-regitrar-cuenta">Registrar cuenta</button>
 
+                </div>
+            </form>
         </div>
+
     </div>
 </section>
 {% endif %}
 
-<div style="padding: 10px">
+<div style="padding: 30px">
     <table class="tabla">
         <tr>
             <th><strong>Nombre</strong></th>
@@ -96,7 +110,7 @@
     </table>
 </div>
 
-<script src="{% static 'js/cuentas.js' %}"></script>
+<script src="{% static 'js/planDeCuentas.js' %}"></script>
 
 </body>
 </html>

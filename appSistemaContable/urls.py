@@ -20,5 +20,10 @@ urlpatterns = [
     path('is-valid-saldo', views.is_valid_saldo),
     path('get-nombre-cuenta', views.get_nombre_cuenta),
 
+    path('get-cuenta-asientos', views.get_cuenta_asientos),
+
+    path('cuentas/existe-codigo', views.existe_codigo_cuenta),
+    path('cuentas/registrar-nueva-cuenta', views.registrar_cuenta),
+
     # path('signup/', views.signup_view, name='signup'),
 ]

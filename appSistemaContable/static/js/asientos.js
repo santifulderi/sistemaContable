@@ -28,6 +28,7 @@ const csrftoken = getCookie('csrftoken');
 closeModalRegistrarAsiento.addEventListener('click', (e)=>{
     e.preventDefault()
     modalRegistrarAsiento.classList.remove('modal--show')
+    window.location.reload()
 })
 
 buttonModalRegistrarAsiento.addEventListener('click', (e)=> {

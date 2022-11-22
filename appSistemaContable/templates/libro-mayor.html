@@ -13,5 +13,33 @@
 <br>
 <h2>Libro mayor</h2>
 <hr>
+<div class="container-boton">
+    <div style="border: 1px solid white; padding: 20px">
+        <div style="padding: 10px 20px">Cuenta
+            <select name="cuenta" id="cuenta" style="color: #313145; background-color: white; font-size: 1rem; border-radius: 4px">
+                {% for cuenta in cuentas %}
+                <option value="{{cuenta.id}}">{{cuenta.cuenta}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button class="button" id="aplicar_cuenta">
+            Ver
+        </button>
+    </div>
+</div>
+<br>
+<table id="asiento_tabla">
+    <tr>
+        <td><strong>Fecha</strong></td>
+        <td><strong>Detalle</strong></td>
+        <td><strong>Debe</strong></td>
+        <td><strong>Haber</strong></td>
+<!--        <td><strong>Saldo</strong></td>-->
+    </tr>
+</table>
+
 </body>
+
+<script src="{% static 'js/libroMayor.js' %}"></script>
+
 </html>

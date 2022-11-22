@@ -58,13 +58,102 @@ def libro_diario_view(request):
 
 @login_required
 def libro_mayor_view(request):
-    return render(request, 'libro-mayor.html')
+    cuentas = Cuentas.objects.filter(recibe_saldo=True).order_by('codigo')
+    return render(request, 'libro-mayor.html',
+                  {'cuentas': cuentas, 'query': nullcontext})
+
+
+@login_required
+def get_cuenta_asientos(request):
+    result = ast.literal_eval(request.body.decode('utf-8'))
+    id_cuenta = result['id_cuenta']
+    cuenta_asientos = CuentaAsiento.objects.filter(id_cuenta=id_cuenta)
+    # print("Query entera de todos los renglones asociados a la cuenta: ", cuenta_asientos.values())
+    resultado = []
+
+    # Caso de que con el id se haya encontrado la cuenta_asiento
+    if len(cuenta_asientos) > 0:
+        for x in cuenta_asientos:
+            print("XXXXXXXXXXXXXXX ", x)
+            print("XXXXXXXXXXXXXXX ", x.id_cuenta.id)
+            print("iddddddddddddddddd ", x.id_asiento.id)
+            aux = []
+            asiento_asociado = Asiento.objects.filter(id=x.id_asiento.id)[0]
+            print("Asiento asociadooooooooooo ", asiento_asociado)
+            aux.append(asiento_asociado.fecha)
+            aux.append(asiento_asociado.descripcion)
+            aux.append(x.debe)
+            aux.append(x.haber)
+            aux.append(x.saldo) #por ahi se quita
+            resultado.append(aux)
+            print(aux)
+            print(resultado)
+        data = {
+            'cuenta_asientos': resultado,
+            'mensaje': "Exito..."
+        }
+    else:
+        data = {
+            'mensaje': "Error..."
+        }
+    return JsonResponse(data)
 
 
 @login_required
 def plan_de_cuentas_view(request):
     cuentas = Cuentas.objects.all().order_by('codigo')
     return render(request, 'plan-de-cuentas.html', {'cuentas': cuentas, 'query': nullcontext})
+
+
+@login_required
+def existe_codigo_cuenta(request):
+    print("Llega a la funcion de existe_codigo_cuenta")
+    result = ast.literal_eval(request.body.decode('utf-8'))
+    codigo = result['codigo']
+    existe = False
+
+    # value = Cuentas.objects.filter(codigo=codigo)
+    value = Cuentas.objects.all()
+
+    for x in value:
+        if x.codigo == codigo:
+            existe = True
+            break
+
+    if len(value) > 0:
+        data = {
+            'existe': existe,
+            'mensaje': "Ya existe una cuenta con dicho código"
+        }
+    else:
+        data = {
+            'existe': existe,
+            'mensaje': "No existe una cuenta con dicho código"
+        }
+    print("El código existe: ", existe)
+    return JsonResponse(data)
+
+
+@login_required
+def registrar_cuenta(request):
+    print("Llega a registrar_cuenta")
+    result = ast.literal_eval(request.body.decode('utf-8'))
+    nombre = result['nombre']
+    codigo = result['codigo']
+    tipo = result['tipo']
+    recibe_saldo = result['recibe_saldo']
+    saldo = result['saldo']
+
+    if recibe_saldo>0:
+        new_cuenta = Cuentas.objects.create(cuenta=nombre, codigo=codigo, tipo=tipo, recibe_saldo=True,
+                                            saldo_actual=saldo)
+    else:
+        new_cuenta = Cuentas.objects.create(cuenta=nombre, codigo=codigo, tipo=tipo, recibe_saldo=False)
+
+    data = {
+        'mensaje': "Cuenta registrada"
+    }
+    return JsonResponse(data)
 
 
 @login_required
@@ -110,17 +199,17 @@ def is_valid_saldo(request):
             # elif value[0].tipo == 'PM':
             #     pass
             #     # la cuenta es de patrimonio y va por el debe
-            elif value[0].tipo == 'R+':
+            elif value[0].tipo == 'R-':
                 # la cuenta es de resultado + y va por el debe
                 data = {
                     'value': True,
                     'mensaje': "Comprobación realizada en el saldo de la cuenta, saldo mayor a 0"
                 }
-            elif value[0].tipo == 'R-':
+            elif value[0].tipo == 'R+':
                 # la cuenta es de resultado - y va por el debe
                 data = {
                     'value': False,
-                    'mensaje': "La cuenta es de Resultado Negativo(R-), se registra por el haber"
+                    'mensaje': "La cuenta es de Positivo(R+), se registra por el haber"
                 }
 
         else:  # tipo_operacion == 'haber'
@@ -147,13 +236,13 @@ def is_valid_saldo(request):
             # elif value[0].tipo == 'PM':
             #     pass
             #     # la cuenta es de patrimonio y va por el haber
-            elif value[0].tipo == 'R+':
+            elif value[0].tipo == 'R-':
                 # la cuenta es de resultado + y va por el haber
                 data = {
                     'value': False,
-                    'mensaje': "La cuenta es de Resultado Positivo(R+), se registra por el haber"
+                    'mensaje': "La cuenta es de Resultado Resultado Negativo(R-), se registra por el debe"
                 }
-            elif value[0].tipo == 'R-':
+            elif value[0].tipo == 'R+':
                 # la cuenta es de resultado - y va por el haber
                 data = {
                     'value': True,
@@ -175,7 +264,7 @@ def registrar_asiento_view(request):
     num_prox_asiento = len(asientos) + 1
     # cuentas = Cuentas.objects.all()
     cuentas = Cuentas.objects.filter(recibe_saldo=True).order_by('codigo')
-    print("Tipo de dato:",type(cuentas))
+    print("Tipo de dato:", type(cuentas))
     return render(request, 'registrar-asiento.html',
                   {'asientos': asientos, 'num_prox_asiento': num_prox_asiento, 'cuentas': cuentas,
                    'query': nullcontext})
@@ -219,10 +308,10 @@ def registrar_asiento(request):
         debe_decimal = Decimal(renglon[1])
         haber_decimal = Decimal(renglon[2])
         if cuenta.tipo == 'AC':
-            print("Saldo actual de la cuenta ",cuenta.cuenta,": ", cuenta.saldo_actual)
+            print("Saldo actual de la cuenta ", cuenta.cuenta, ": ", cuenta.saldo_actual)
             cuenta.saldo_actual += debe_decimal
             cuenta.saldo_actual -= haber_decimal
-            print("Saldo actual de la cuenta ",cuenta.cuenta,"(actualizado): ", cuenta.saldo_actual)
+            print("Saldo actual de la cuenta ", cuenta.cuenta, "(actualizado): ", cuenta.saldo_actual)
         if cuenta.tipo == 'PA':
             cuenta.saldo_actual += haber_decimal
             cuenta.saldo_actual -= debe_decimal
@@ -234,7 +323,8 @@ def registrar_asiento(request):
             cuenta.saldo_actual += haber_decimal
             cuenta.saldo_actual -= debe_decimal
         cuenta.save()
-        new_renglon = CuentaAsiento.objects.create(id_cuenta=cuenta, id_asiento=new_asiento, debe=renglon[1], haber=renglon[2], saldo=renglon[3])
+        new_renglon = CuentaAsiento.objects.create(id_cuenta=cuenta, id_asiento=new_asiento, debe=renglon[1],
+                                                   haber=renglon[2], saldo=renglon[3])
 
     data = {
         'mensaje': "Error del sistema, cuenta no encontrada"

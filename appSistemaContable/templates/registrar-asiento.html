@@ -43,7 +43,7 @@
 <!--                <button class="button" type="submit" id="limpiar-filtros">Limpiar filtros</button>-->
 <!--            </form>-->
 <!--        </div>-->
-        <div id="container-tabla-resultados" class="table-asientos" style="padding-top: 30px">
+        <div id="container-tabla-resultados" class="table-asientos" style="padding: 30px 25px">
             <table>
                 <tr>
                     <td><strong>Fecha</strong></td>
@@ -94,10 +94,10 @@
 <!--                        <input type="text">-->
                     </div>
                     <div style="padding-top: 20px;">
-                        Descripción
+                        Descripción:
                         <br>
                         <br>
-                        <textarea maxlength="100" id="descripcion_asiento"></textarea>
+                        <textarea maxlength="100" id="descripcion_asiento" style="color: #313145; background-color: white; font-size: 1rem; border-radius: 4px; width: 100%"></textarea>
                     </div>
                 </div>
             </div>
@@ -105,7 +105,7 @@
             <form id="form_renglon">
             <div style="border: 1px solid white; padding: 20px">
                 <div style="padding: 10px 20px">Cuenta
-                    <select name="cuenta" id="renglon_cuenta">
+                    <select name="cuenta" id="renglon_cuenta" style="color: #313145; background-color: white; font-size: 1rem; border-radius: 4px">
                         {% for cuenta in cuentas %}
                             <option value="{{cuenta.id}}">{{cuenta.cuenta}}</option>
                         {% endfor %}

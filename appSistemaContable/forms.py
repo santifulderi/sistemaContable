@@ -75,9 +75,18 @@ class UserSignUpForm(forms.Form):
 
 
 class CustomUserCreationForm(UserCreationForm):
+    # username = forms.ChoiceField(
+    #     choices=
+    #     label='Tipo de perfil',
+    #     required=True,
+    # )
+
     class Meta:
         model = Usuario
-        fields = ['username',
+        fields = ['usuario_administrador',
+                  'username',
+                  # 'id_perfil',
                   'email',
                   'nombres',
-                  'apellidos']
+                  'apellidos',
+                  ]
